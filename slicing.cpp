@@ -17,21 +17,21 @@ namespace{
 	  switch (OpCode) {
 	    case Instruction::Ret:    return true;
 	    case Instruction::Br:     return true;
-	    case Switch: return true;
-	    case IndirectBr: return true;
-	    case Invoke: return true;
-	    case Resume: return true;
-	    case Unreachable: return true;
+	    case Instruction:: Switch: return true;
+	    case Instruction:: IndirectBr: return true;
+	    case Instruction:: Invoke: return true;
+	    case Instruction:: Resume: return true;
+	    case Instruction:: Unreachable: return true;
 	    
-	    case Alloca:        return true;
-	    case Load:          return true;
-	    case Store:         return true;
-	    case AtomicCmpXchg: return true;
-	    case AtomicRMW:     return true;
-	    case Fence:         return true;
-	    case GetElementPtr: return true;
+	    case Instruction:: Alloca:        return true;
+	    case Instruction:: Load:          return true;
+	    case Instruction:: Store:         return true;
+	    case Instruction:: AtomicCmpXchg: return true;
+	    case Instruction:: AtomicRMW:     return true;
+	    case Instruction:: Fence:         return true;
+	    case Instruction:: GetElementPtr: return true;
 	    
-	    case Call:           return true;
+	    case Instruction:: Call:           return true;
 	    
 	    default: return false;
 	    
