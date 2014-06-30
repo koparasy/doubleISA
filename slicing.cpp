@@ -11,6 +11,34 @@ using namespace llvm;
 
 namespace{
 
+  bool getFirstPassSig( Instruction*inst ){
+	  unsigned OpCode = inst->getOpcode();
+	  switch (OpCode) {
+	    case Ret:    return true;
+	    case Br:     return true;
+	    case Switch: return true;
+	    case IndirectBr: return true;
+	    case Invoke: return true;
+	    case Resume: return true;
+	    case Unreachable: return true;
+	    
+	    case Alloca:        return true;
+	    case Load:          return true;
+	    case Store:         return true;
+	    case AtomicCmpXchg: return true;
+	    case AtomicRMW:     return true;
+	    case Fence:         return true;
+	    case GetElementPtr: return true;
+	    
+	    case Call:           return true;
+	    
+	    default: return false;
+	    
+	  }
+	  return false;
+	}
+	
+  
 	typedef iplist<BasicBlock> BasicBlockListType;
 	typedef BasicBlockListType::iterator block_iter;
 	typedef iplist<Instruction> InstListType;
@@ -20,23 +48,6 @@ namespace{
 		static char ID;
 		Slicing() : FunctionPass(ID) {}
 		virtual bool runOnFunction(Function &F){
-			/*
-			   BasicBlockListType &my_blocks = F.getBasicBlockList();  
-			   block_iter blocks = my_blocks.begin(); 
-			   for( blocks = my_blocks.begin() ; blocks != my_blocks.end() ; ++blocks){
-			   InstListType &Instructions = blocks->getInstList();
-			   inst_iter inst = Instructions.begin();
-			   for(inst = Instructions.begin() ; inst != Instructions.end(); ++inst){
-			   const char *name = inst->getOpcodeName();
-			   unsigned int num_operands = inst->getNumOperands();
-			   std::cout<<"Instruction Name "<<name<<" Operands : "<<num_operands<<""<<std::endl;
-			   }
-
-
-			   }
-			   return false;
-			 */
-
 			std::cout << "\n*********************************\n";
 			std::cout<<"Slicing Pass per function Starts\n";
 			errs().write_escaped(F.getName()) <<"\n";
@@ -48,7 +59,10 @@ namespace{
 					unsigned int num_operands = i->getNumOperands();
 					Type *inst_type = i->getType();
 					Type::TypeID id = inst_type->getTypeID();
-					bool sig = i->getSignificance();
+					
+					// Initialize significance of already known instructions (branch,load,store etc)
+					i->setSignificance(getFirstPassSig(i));
+					
 					std::cout<<"Instruction Name "<<name<<" Operands : "<<num_operands<<" "<<id<<" "<<std::endl;
 				}	
 			}
