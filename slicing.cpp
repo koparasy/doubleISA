@@ -62,9 +62,9 @@ namespace{
 					Type::TypeID id = inst_type->getTypeID();
 					
 					// Initialize significance of already known instructions (branch,load,store etc)
-					i->setSignificance(getFirstPassSig(i));
+// 					i->setSignificance(getFirstPassSig(i));
 					
-					std::cout<<"Instruction Name "<<name<<" Operands : "<<num_operands<<" "<<id<<" "<<i->getSignificance()<<""<<std::endl;
+					std::cout<<"Instruction Name "<<name<<" Operands : "<<num_operands<<" "<<id<<" "<<std::endl;
 				}	
 			}
 			return false;
