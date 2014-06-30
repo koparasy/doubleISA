@@ -7,7 +7,6 @@
 #include "llvm/IR/Instruction.h"
 #include "llvm/IR/Value.h"
 #include "llvm/IR/User.h"
-#include "llvm/IR/Instruction.def"
 
 using namespace llvm;
 
@@ -16,8 +15,8 @@ namespace{
   bool getFirstPassSig( Instruction*inst ){
 	  unsigned OpCode = inst->getOpcode();
 	  switch (OpCode) {
-	    case Ret:    return true;
-	    case Br:     return true;
+	    case Instruction::Ret:    return true;
+	    case Instruction::Br:     return true;
 	    case Switch: return true;
 	    case IndirectBr: return true;
 	    case Invoke: return true;
